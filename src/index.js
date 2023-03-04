@@ -208,9 +208,9 @@ var lrmControlCustom = L.Routing.control(Object.assign(controlOptionsCustom, {
 // User selected safetyPreferences
 var safetyEnabled = false;
 var safetyToggle = document.getElementById('safetyCheckbox')
-safetyToggle.on('click', function (e){
-  safetyEnabled = !safetyEnabled;
-});
+safetyToggle.onclick = function (e){
+  safetyEnabled = e.checked;
+};
 
 // does the stuff above only happen once?
 var toolsControl = tools.control(localization.get(mergedOptions.language), localization.getLanguages(), options.tools).addTo(map);
