@@ -56,6 +56,6 @@ var State = L.Class.extend({
   },
 });
 
-module.exports = function(map, lrm_control, tools, default_options) {
+module.exports = function(map, lrm_control, lrm_control_custom, tools, default_options) {
   return new State(map, lrm_control, lrm_control_custom, tools, default_options);
 };
