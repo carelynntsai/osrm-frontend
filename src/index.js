@@ -151,8 +151,24 @@ var controlOptions = {
   routeDragInterval: options.lrm.routeDragInterval,
   collapsible: options.lrm.collapsible
 };
-var controlOptionsCustom = controlOptions;
-controlOptionsCustom.serviceUrl = leafletOptions.services[0].pathCustom;
+
+var controlOptionsCustom = {
+  plan: plan,
+  routeWhileDragging: options.lrm.routeWhileDragging,
+  lineOptions: options.lrm.lineOptions,
+  altLineOptions: options.lrm.altLineOptions,
+  summaryTemplate: options.lrm.summaryTemplate,
+  containerClassName: options.lrm.containerClassName,
+  alternativeClassName: options.lrm.alternativeClassName,
+  stepClassName: options.lrm.stepClassName,
+  language: 'en', // we are injecting own translations via osrm-text-instructions
+  showAlternatives: options.lrm.showAlternatives,
+  units: mergedOptions.units,
+  serviceUrl: leafletOptions.services[0].pathCustom,
+  useZoomParameter: options.lrm.useZoomParameter,
+  routeDragInterval: options.lrm.routeDragInterval,
+  collapsible: options.lrm.collapsible
+};
 
 var router = (new L.Routing.OSRMv1(controlOptions));
 var routerCustom = (new L.Routing.OSRMv1(controlOptionsCustom));
@@ -209,7 +225,7 @@ var lrmControlCustom = L.Routing.control(Object.assign(controlOptionsCustom, {
 var safetyEnabled = false;
 var safetyToggle = document.getElementById('safetyCheckbox')
 safetyToggle.onclick = function (e){
-  safetyEnabled = e.checked;
+  safetyEnabled = e.target.checked;
 };
 
 // does the stuff above only happen once?
