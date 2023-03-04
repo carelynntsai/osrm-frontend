@@ -1,8 +1,12 @@
 FROM alpine:3.7
 
 # Enables customized options using environment variables
+
+# Backends
 ENV OSRM_BACKEND='http://localhost:5000'
-ENV OSRM_CENTER='43.47, -80.54'
+ENV OSRM_BACKEND_CUSTOM='http://localhost:5001'
+
+ENV OSRM_CENTER='43.466667, -80.516667'
 ENV OSRM_ZOOM='13'
 ENV OSRM_LANGUAGE='en'
 ENV OSRM_LABEL='Car (fastest)'

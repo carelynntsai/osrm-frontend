@@ -151,7 +151,12 @@ var controlOptions = {
   routeDragInterval: options.lrm.routeDragInterval,
   collapsible: options.lrm.collapsible
 };
+var controlOptionsCustom = controlOptions;
+controlOptionsCustom.serviceUrl = leafletOptions.services[0].pathCustom;
+
 var router = (new L.Routing.OSRMv1(controlOptions));
+var routerCustom = (new L.Routing.OSRMv1(controlOptionsCustom));
+
 router._convertRouteOriginal = router._convertRoute;
 router._convertRoute = function(responseRoute) {
   // monkey-patch L.Routing.OSRMv1 until it's easier to overwrite with a hook
@@ -171,11 +176,45 @@ router._convertRoute = function(responseRoute) {
 
   return resp;
 };
+
+routerCustom._convertRouteOriginal = routerCustom._convertRoute;
+routerCustom._convertRoute = function(responseRoute) {
+  // monkey-patch L.Routing.OSRMv1 until it's easier to overwrite with a hook
+  var resp = this._convertRouteOriginal(responseRoute);
+
+  if (resp.instructions && resp.instructions.length) {
+    var i = 0;
+    responseRoute.legs.forEach(function(leg) {
+      leg.steps.forEach(function(step) {
+        // abusing the text property to save the original osrm step
+        // for later use in the itnerary builder
+        resp.instructions[i].text = step;
+        i++;
+      });
+    });
+  };
+
+  return resp;
+};
+
 var lrmControl = L.Routing.control(Object.assign(controlOptions, {
   router: router
 })).addTo(map);
+
+var lrmControlCustom = L.Routing.control(Object.assign(controlOptionsCustom, {
+  router: routerCustom
+})).addTo(map);
+
+// User selected safetyPreferences
+var safetyEnabled = false;
+var safetyToggle = document.getElementById('safetyCheckbox')
+safetyToggle.on('click', function (e){
+  safetyEnabled = !safetyEnabled;
+});
+
+// does the stuff above only happen once?
 var toolsControl = tools.control(localization.get(mergedOptions.language), localization.getLanguages(), options.tools).addTo(map);
-var state = state(map, lrmControl, toolsControl, mergedOptions);
+var state = state(map, lrmControl, lrmControlCustom, toolsControl, mergedOptions);
 
 plan.on('waypointgeocoded', function(e) {
   if (plan._waypoints.filter(function(wp) {
@@ -194,20 +233,47 @@ map.on('click', function (e) {
 
 });
 function addWaypoint(waypoint) {
-  var length = lrmControl.getWaypoints().filter(function(pnt) {
-    return pnt.latLng;
-  });
-  length = length.length;
-  if (!length) {
-    lrmControl.spliceWaypoints(0, 1, waypoint);
-  } else {
-    if (length === 1) length = length + 1;
-    lrmControl.spliceWaypoints(length - 1, 1, waypoint);
+  if (safetyEnabled) {
+    var length = lrmControlCustom.getWaypoints().filter(function(pnt) {
+      return pnt.latLng;
+    });
+    length = length.length;
+    if (!length) {
+      lrmControlCustom.spliceWaypoints(0, 1, waypoint);
+    } else {
+      if (length === 1) length = length + 1;
+      lrmControlCustom.spliceWaypoints(length - 1, 1, waypoint);
+    }
+  }
+  else {
+    var length = lrmControl.getWaypoints().filter(function(pnt) {
+      return pnt.latLng;
+    });
+    length = length.length;
+    if (!length) {
+      lrmControl.spliceWaypoints(0, 1, waypoint);
+    } else {
+      if (length === 1) length = length + 1;
+      lrmControl.spliceWaypoints(length - 1, 1, waypoint);
+    }
   }
 }
 
 // User selected routes
 lrmControl.on('alternateChosen', function(e) {
+  if (safetyEnabled) return;
+  var directions = document.querySelectorAll('.leaflet-routing-alt');
+  if (directions[0].style.display != 'none') {
+    directions[0].style.display = 'none';
+    directions[1].style.display = 'block';
+  } else {
+    directions[0].style.display = 'block';
+    directions[1].style.display = 'none';
+  }
+});
+
+lrmControlCustom.on('alternateChosen', function(e) {
+  if (!safetyEnabled) return;
   var directions = document.querySelectorAll('.leaflet-routing-alt');
   if (directions[0].style.display != 'none') {
     directions[0].style.display = 'none';
@@ -220,6 +286,34 @@ lrmControl.on('alternateChosen', function(e) {
 
 // Route export
 lrmControl.on('routeselected', function(e) {
+  if (safetyEnabled) return;
+  var route = e.route || {};
+  var routeGeoJSON = {
+    type: 'Feature',
+    properties: {
+      name: route.name,
+      copyright: {
+        author: 'OpenStreetMap contributors',
+        license: 'http://www.openstreetmap.org/copyright'
+      },
+      link: {
+        href: window.document.location.href,
+        text: window.document.title
+      },
+      time: (new Date()).toISOString()
+    },
+    geometry: {
+      type: 'LineString',
+      coordinates: (route.coordinates || []).map(function (coordinate) {
+        return [coordinate.lng, coordinate.lat];
+      })
+    }
+  };
+  toolsControl.setRouteGeoJSON(routeGeoJSON);
+});
+
+lrmControlCustom.on('routeselected', function(e) {
+  if (!safetyEnabled) return;
   var route = e.route || {};
   var routeGeoJSON = {
     type: 'Feature',
