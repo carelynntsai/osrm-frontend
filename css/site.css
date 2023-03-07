@@ -38,7 +38,7 @@
 
 /* tool colors and divs */
 .fill-osrm {
-  background-color: rgba(37,72,127, 0.8);
+  background-color:rgb(45, 114, 210, 0.85);
 }
 
 .fill-dark {
@@ -49,25 +49,26 @@
   color: #fff;
 }
 
+/*TODO: Move scale to the right
 /* Scale position */
 .leaflet-control-scale {
   position: absolute;
-  left: 200px;
-  bottom: 1px;
+  right: 200px;
+  bottom: 80px;
 }
 
 /* Zoom control position */
 .leaflet-control-zoom {
   left: 355px;
-    color: rgba(37,72,127, 0.8);
+    color:rgb(45, 114, 210, 0.85);
 }
 
 .leaflet-bar a {
-  color: rgba(37,72,127, 0.8);
+  color:rgb(45, 114, 210, 0.85);
 }
 
 .leaflet-control-locate.leaflet-bar a {
-  color: rgba(37,72,127, 0.8);
+  color:rgb(45, 114, 210, 0.85);
   background-image: url('../images/crosshairs.svg');
   width: 26px;
   height: 26px;
@@ -81,22 +82,11 @@
   top: -20px;
 }
 
-/* Not used: {
-  background-image: url('../images/crosshairs.svg');
-  width: 36px;
-  height: 36px;
-  color: rgba(37,72,127, 0.8);
-  background-color: rgba(37,72,127, 0.8);
-  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
-  border-radius: 4px;
-  z-index: 100;
-} */
-
 /* Layers position */
 .leaflet-control-layers {
   position: absolute;
-  left: 0px;
-  bottom: 35px;
+  right: 220px;
+  bottom: 10px;
 }
 
 .leaflet-control-layers-expanded {
@@ -113,7 +103,7 @@
   background-image: url('../images/layers.svg');
   width: 36px;
   height: 36px;
-  background-color: rgba(37,72,127, 0.8);
+  background-color:rgb(45, 114, 210, 0.85);
   box-shadow: 0 1px 5px rgba(0,0,0,0.65);
   border-radius: 4px;
 }
@@ -128,17 +118,18 @@
 .leaflet-control-layers-expanded {
   padding: 6px 10px 6px 6px;
   color: #fff;
-  background-color: rgba(37,72,127, 0.8);
+  background-color:rgb(45, 114, 210, 0.85);
 }
 
 /* Toolbar */
 .leaflet-osrm-tools-container
 {
   box-shadow: 0 1px 5px rgba(0,0,0,0.65);
-  background-color: rgba(37,72,127, 0.8);
+  background-color:rgb(45, 114, 210, 0.85);
   border-radius: 4px;
-  width: 161px;
+  width: 151px;
   height: 26px;
+  left: 50px;
 }
 
 
@@ -154,8 +145,8 @@
 /* Geocode container */
 .leaflet-routing-container {
   position: fixed;
-  width: 33.3333%;
-  max-width: 340px;
+  width: 35%;
+  max-width: 360px;
   min-width: 200px;
   padding-right: 0px;
   transition: 0.5s;
@@ -165,15 +156,15 @@
   z-index: 10;
   background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.85);
   top: 0px;
-  right: 0px;
+  left: 0px;
   bottom: 0px;
   margin: 0px !important;
-  background-image: url('../images/osrm_logo.svg');
-  -webkit-background-size: 200px 60px;
+  /* background-image: url('../images/osrm_logo.svg'); */
+  /* -webkit-background-size: 200px 60px;
   background-size: 200px 60px;
   background-position: -20px 10px;
   background-repeat: no-repeat;
-  padding-top: 50px;
+  padding-top: 50px; */
 }
 
 .leaflet-routing-geocoders div {
@@ -190,8 +181,8 @@
 .leaflet-container button {
   margin: 0 10px 0 0;
   float: left;
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
   background-color: white;
 }
 
@@ -201,7 +192,7 @@
   margin-right: 3px;
   float: right;
   cursor: pointer;
-  background-color: rgba(37,72,127, 0.75);
+  background-color: rgb(45, 114, 210, 0.85);
   transition: background-color 0.2s ease;
   border: 0px;
   border-radius: 0 0 5px 5px;
@@ -269,10 +260,10 @@
 
 .leaflet-routing-alternatives-container {
   position: fixed;
-  right: 0px;
-  top: 60px;
-  width: 45%;
-  max-width: 340px;
+  left: 0px;
+  top: 100px;
+  width: 50%;
+  max-width: 350px;
   min-width: 200px;
   height: 95%;
   overflow: scroll;
@@ -505,7 +496,7 @@
 /* Directions Summary */
 .osrm-directions-summary
 {
-  color: rgba(37,72,127, 0.8);
+  color:rgb(45, 114, 210, 0.85);
 }
 
 .leaflet-routing-alt.osrm-directions-instructions.leaflet-routing-alt-minimized
@@ -515,13 +506,13 @@
 
 .leaflet-routing-alt-minimized .osrm-directions-summary
 {
-  color: rgba(37,72,127, 0.8);
+  color:rgb(45, 114, 210, 0.85);
   padding-top: 80px;
 }
 
 .leaflet-routing-alt table td,
 .leaflet-routing-alt table {
-  color: rgba(37,72,127, 0.8);
+  color:rgb(45, 114, 210, 0.85);
   margin-top: 20px;
   padding: 5px;
   padding-bottom: 10px;
@@ -532,7 +523,7 @@
 
 .leaflet-routing-alt-minimized table td,
 .leaflet-routing-alt-minimized table {
-  color: rgba(37,72,127, 0.8);
+  color:rgb(45, 114, 210, 0.85);
   margin-top: 20px;
   padding: 5px;
   padding-bottom: 10px;
@@ -721,7 +712,7 @@ td.distance {
 ------------------------------------------------------- */
 @media only screen and (max-width:880px) {
   .osrm-directions-summary {
-    background-image: url('../images/osrm_logo.svg');
+    /* background-image: url('../images/osrm_logo.svg'); */
     -webkit-background-size: 200px 45px;
     background-size: 200px 45px;
     background-repeat: no-repeat;
@@ -810,7 +801,7 @@ td.distance {
 ------------------------------------------------------- */
 @media only screen and (max-width:400px) {
 .osrm-directions-summary {
-  background-image: url('../images/osrm_logo.svg');
+  /* background-image: url('../images/osrm_logo.svg'); */
   -webkit-background-size: 200px 45px;
   background-size: 200px 45px;
   background-repeat: no-repeat;
@@ -854,7 +845,7 @@ td.distance {
   max-width: 58%;
   min-width: 40%;
 }
-  
+
 .leaflet-routing-alt table td, .leaflet-routing-alt table {
     margin-top: 10px;
     padding-bottom: 0px;
@@ -864,7 +855,7 @@ td.distance {
     line-height: 16px;
 }
 
-.leaflet-routing-alt .osrm-directions-instructions, 
+.leaflet-routing-alt .osrm-directions-instructions,
 .leaflet-routing-alternatives-container {
     position: fixed;
     right: 0px;
@@ -890,11 +881,11 @@ td.distance {
 
 }
 
-.leaflet-routing-collapse-btn {
+/* .leaflet-routing-collapse-btn {
     position: fixed;
     top: 10px;
     right: 10px;
-    background-color: rgba(37, 72, 127, 0.74902);
+    background-color: rgb(45, 114, 210, 0.85);
     width: 36px;
     height: 36px;
     display: flex;
@@ -914,7 +905,7 @@ td.distance {
 
 .leaflet-routing-container-hide .leaflet-routing-collapse-btn:after {
     content: '\2039';
-}
+} */
 
 .leaflet-routing-container-hide.dark, .leaflet-routing-container-hide .leaflet-routing-alternatives-container {
     margin-right: -400px !important;

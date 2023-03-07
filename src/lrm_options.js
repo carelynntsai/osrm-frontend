@@ -7,7 +7,7 @@ module.exports = {
   lrm: {
     lineOptions: {
       styles: [
-        {color: '#022bb1', opacity: 0.8, weight: 8},
+        {color: '#2D72D2', opacity: 0.9, weight: 8},
         {color: 'white', opacity: 0.3, weight: 6}
       ]
     },
@@ -23,7 +23,7 @@ module.exports = {
       {color: 'white', opacity: 0.8, weight: 7}
     ],
     routeWhileDragging: true,
-    summaryTemplate: '<div class="osrm-directions-summary"><h2>{name}</h2><h3>{distance}, {time}</h3></div>',
+    summaryTemplate: '<div class="osrm-directions-summary"><h3>Distance: {distance}, <br> Time: {time}</h3></div>',
     containerClassName: 'dark pad2',
     alternativeClassName: 'osrm-directions-instructions',
     stepClassName: 'osrm-directions-step',
@@ -49,6 +49,6 @@ module.exports = {
     localizationChooserClass: 'osrm-localization-chooser',
     printButtonClass: 'osrm-directions-icon osrm-printer-icon',
     toolsContainerClass: 'fill-osrm dark',
-    position: 'bottomleft'
+    position: 'bottomright'
   }
 };
