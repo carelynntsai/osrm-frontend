@@ -2,6 +2,7 @@
 
 var mapView = require('./leaflet_options');
 var createGeocoder = require('./geocoder');
+var createCheckboxes = require('./checkboxes');
 
 module.exports = {
   lrm: {
@@ -18,17 +19,25 @@ module.exports = {
         {color: 'white', opacity: 0.3, weight: 6}
       ]
     },
+    checkboxes: {
+      styles: [
+        {color: 'black'}
+      ]
+    },
+
     dragStyles: [
       {color: 'black', opacity: 0.35, weight: 9},
       {color: 'white', opacity: 0.8, weight: 7}
     ],
     routeWhileDragging: true,
+    safetyDetails: '<div class="osrm-directions-summary"><h3>Lighting</h3></div>',
     summaryTemplate: '<div class="osrm-directions-summary"><h3>Distance: {distance}, <br> Time: {time}</h3></div>',
     containerClassName: 'dark pad2',
     alternativeClassName: 'osrm-directions-instructions',
     stepClassName: 'osrm-directions-step',
     geocodersClassName: 'osrm-directions-inputs',
     createGeocoder: createGeocoder,
+    // createCheckboxes: createCheckboxes,
     showAlternatives: true,
     useZoomParameter: false,
     routeDragInterval: 200,

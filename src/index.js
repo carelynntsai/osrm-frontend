@@ -2,6 +2,7 @@
 
 var L = require('leaflet');
 var Geocoder = require('leaflet-control-geocoder');
+var checkboxes = require('./checkboxes');
 var LRM = require('leaflet-routing-machine');
 var locate = require('leaflet.locatecontrol');
 var options = require('./lrm_options');
@@ -39,6 +40,7 @@ mapLayer = mapLayer.reduce(function(title, layer) {
   return title;
 });
 
+
 /* Leaflet Controls */
 L.control.layers(mapLayer, overlay, {
   position: 'bottomright'
@@ -67,6 +69,17 @@ var ReversablePlan = L.Routing.Plan.extend({
   }
 });
 
+// function createCheckboxes() {
+//   command.addTo(map);
+
+//   // add the event handler
+//   function handleCommand() {
+//     alert("Clicked, checked = " + this.checked);
+//   }
+//   document.getElementById ("safety_factors").addEventListener ("click", handleCommand, false);
+
+
+// };
 /* Setup markers */
 function makeIcon(i, n) {
   var url = 'images/marker-via-icon-2x.png';
@@ -138,6 +151,8 @@ var controlOptions = {
   lineOptions: options.lrm.lineOptions,
   altLineOptions: options.lrm.altLineOptions,
   summaryTemplate: options.lrm.summaryTemplate,
+  safetyDetails: options.lrm.safetyDetails,
+  checkboxes: options.lrm.checkboxes,
   containerClassName: options.lrm.containerClassName,
   alternativeClassName: options.lrm.alternativeClassName,
   stepClassName: options.lrm.stepClassName,
@@ -176,13 +191,15 @@ var toolsControl = tools.control(localization.get(mergedOptions.language), local
 var state = state(map, lrmControl, toolsControl, mergedOptions);
 
 plan.on('waypointgeocoded', function(e) {
-  if (plan._waypoints.filter(function(wp) { return !!wp.latLng; }).length < 2) {
+  if (plan._waypoints.filter(function(wp) {
+    return !!wp.latLng;
+  }).length < 2) {
     map.panTo(e.waypoint.latLng);
   }
 });
 
 // add onClick event
-map.on('click', function (e){
+map.on('click', function (e) {
   addWaypoint(e.latlng);
 });
 function addWaypoint(waypoint) {
@@ -238,7 +255,9 @@ lrmControl.on('routeselected', function(e) {
 });
 plan.on('waypointschanged', function(e) {
   if (!e.waypoints ||
-      e.waypoints.filter(function(wp) { return !wp.latLng; }).length > 0) {
+      e.waypoints.filter(function(wp) {
+        return !wp.latLng;
+      }).length > 0) {
     toolsControl.setRouteGeoJSON(null);
   }
 });
@@ -259,39 +278,43 @@ L.control.locate({
   locateOptions: {}
 }).addTo(map);
 
-// L.control.Checkboxes = L.control.extend({
-//   onAdd: function(map) {
-//     var div = L.DomUtil.create('div', 'command');
-//     div.innerHTML = '<form><input id="command" type="checkbox"/>Sidewalks</form>';
-//     return div;
-//   }
-// });
-// L.control.
-
-
-
-
-// create the control
-var command = L.control({position: 'topright'});
-
-command.onAdd = function (map) {
-  var div = L.DomUtil.create('div', 'command');
+var checkbox = L.control();
+checkbox.onAdd = function(map) {
+  var div = L.DomUtil.create('div', 'checkbox-container');
 
   div.innerHTML = '<form name="preferences" <legend> Safety Preferences</legend> \
    <fieldset style="border: 0;"> <input type="checkbox" name="safety_factors" value="Lighting">Lighting<br> \
    <input type="checkbox" name="safety_factors" value="Sidewalks">Sidewalks<br> \
    <input type="checkbox" name="safety_factors" value="Road Speed">Road speed<br> \
-  <br> <input type="submit" value="Save" /> </fieldset>'
+  <br> <input type="submit" name="save-safety-factors" value="Save" style="color=blue"; /> </fieldset>'
 
-  div.style = 'background-color: white; opacity: 0.8;'
   return div;
 };
 
-command.addTo(map);
-
-
+checkbox.addTo(map);
 // add the event handler
-function handleCommand() {
-  alert("Clicked, checked = " + this.checked);
-}
-document.getElementById ("safety_factors").addEventListener ("click", handleCommand, false);
+// function handleCommand() {
+//   alert("Clicked, checked = " + this.checked);
+// }
+// document.getElementById ("safety_factors").addEventListener ("click", handleCommand, false);
+
+var routeInfo = L.control();
+routeInfo.onAdd = function(map) {
+  var div = L.DomUtil.create('div', 'route-information');
+
+  div.innerHTML = '<h3>Route Information</h3>'
+
+  return div;
+};
+routeInfo.addTo(map);
+
+var safetyDetails = L.control();
+safetyDetails.onAdd = function(map) {
+  var div = L.DomUtil.create('div', 'safety-details');
+
+  div.innerHTML = '<H4>Safety Details</H4>\
+  <p>Lighting: Good <br> Sidewalks: 90% <br> Average nearby road speeds: 50km/h </p>'
+
+  return div;
+};
+safetyDetails.addTo(map);
