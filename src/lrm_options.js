@@ -2,7 +2,6 @@
 
 var mapView = require('./leaflet_options');
 var createGeocoder = require('./geocoder');
-var createCheckboxes = require('./checkboxes');
 
 module.exports = {
   lrm: {
