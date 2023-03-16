@@ -114,7 +114,7 @@ var plan = new ReversablePlan([], {
   useZoomParameter: options.lrm.useZoomParameter,
   reverseWaypoints: true,
   dragStyles: options.lrm.dragStyles,
-  geocodersClassName: options.lrm.geocodersClassName,
+  geocodersClassName: options.lrm.geocodersClassName, // here
   geocoderPlaceholder: function(i, n) {
     var startend = [local['Start - press enter to drop marker'], local['End - press enter to drop marker']];
     var via = [local['Via point - press enter to drop marker']];
