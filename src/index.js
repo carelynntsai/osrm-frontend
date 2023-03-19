@@ -174,8 +174,6 @@ var routerCustom = (new L.Routing.OSRMv1(controlOptionsCustom));
 router._convertRouteOriginal = router._convertRoute;
 router._convertRoute = function(responseRoute) {
   if (safetyEnabled) return;
-  //close custom panel
-  console.log("ORIGINAL CONVERT")
   // monkey-patch L.Routing.OSRMv1 until it's easier to overwrite with a hook
   var resp = this._convertRouteOriginal(responseRoute);
 
@@ -197,8 +195,6 @@ router._convertRoute = function(responseRoute) {
 routerCustom._convertRouteOriginal = routerCustom._convertRoute;
 routerCustom._convertRoute = function(responseRoute) {
   if (!safetyEnabled) return;
-  //open custom panel
-  console.log("CUSTOM CONVERT")
   // monkey-patch L.Routing.OSRMv1 until it's easier to overwrite with a hook
   var resp = this._convertRouteOriginal(responseRoute);
 
@@ -232,12 +228,25 @@ var state = state(map, lrmControl, lrmControlCustom, toolsControl, mergedOptions
 
 // User selected safetyPreferences
 var safetyEnabled = false;
+function displayOnePanel() {
+  var panels = document.querySelectorAll('.leaflet-routing-container');
+  if (panels && panels.length > 1) {
+    if (safetyEnabled) {
+      panels[0].style.display = 'none';
+      panels[1].style.display = 'block';
+    } else {
+      panels[0].style.display = 'block';
+      panels[1].style.display = 'none';
+    }
+  }
+}
 var safetyToggle = document.getElementById('safetyCheckbox')
 safetyToggle.onclick = function (e){
   safetyEnabled = e.target.checked;
-  // fire event for state?
-  state.set(safetyEnabled)
+  state.set(safetyEnabled);
+  displayOnePanel()
 };
+displayOnePanel()
 
 plan.on('waypointgeocoded', function(e) {
   if (plan._waypoints.filter(function(wp) { return !!wp.latLng; }).length < 2) {
