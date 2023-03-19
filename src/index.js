@@ -175,6 +175,9 @@ var routerCustom = (new L.Routing.OSRMv1(controlOptionsCustom));
 
 router._convertRouteOriginal = router._convertRoute;
 router._convertRoute = function(responseRoute) {
+  if (safetyEnabled) return;
+  //close custom panel
+  console.log("ORIGINAL CONVERT")
   // monkey-patch L.Routing.OSRMv1 until it's easier to overwrite with a hook
   var resp = this._convertRouteOriginal(responseRoute);
 
@@ -195,6 +198,9 @@ router._convertRoute = function(responseRoute) {
 
 routerCustom._convertRouteOriginal = routerCustom._convertRoute;
 routerCustom._convertRoute = function(responseRoute) {
+  if (!safetyEnabled) return;
+  //open custom panel
+  console.log("CUSTOM CONVERT")
   // monkey-patch L.Routing.OSRMv1 until it's easier to overwrite with a hook
   var resp = this._convertRouteOriginal(responseRoute);
 
@@ -221,16 +227,19 @@ var lrmControlCustom = L.Routing.control(Object.assign(controlOptionsCustom, {
   router: routerCustom
 })).addTo(map);
 
+
+// does the stuff above only happen once?
+var toolsControl = tools.control(localization.get(mergedOptions.language), localization.getLanguages(), options.tools).addTo(map);
+var state = state(map, lrmControl, lrmControlCustom, toolsControl, mergedOptions);
+
 // User selected safetyPreferences
 var safetyEnabled = false;
 var safetyToggle = document.getElementById('safetyCheckbox')
 safetyToggle.onclick = function (e){
   safetyEnabled = e.target.checked;
+  // fire event for state?
+  state.set(safetyEnabled)
 };
-
-// does the stuff above only happen once?
-var toolsControl = tools.control(localization.get(mergedOptions.language), localization.getLanguages(), options.tools).addTo(map);
-var state = state(map, lrmControl, lrmControlCustom, toolsControl, mergedOptions, safetyEnabled);
 
 plan.on('waypointgeocoded', function(e) {
   if (plan._waypoints.filter(function(wp) {
@@ -250,7 +259,6 @@ map.on('click', function (e) {
 });
 function addWaypoint(waypoint) {
   if (safetyEnabled) {
-    return;
     var length = lrmControlCustom.getWaypoints().filter(function(pnt) {
       return pnt.latLng;
     });
@@ -290,7 +298,6 @@ lrmControl.on('alternateChosen', function(e) {
 });
 
 lrmControlCustom.on('alternateChosen', function(e) {
-  return;
   if (!safetyEnabled) return;
   var directions = document.querySelectorAll('.leaflet-routing-alt');
   if (directions[0].style.display != 'none') {
@@ -303,8 +310,7 @@ lrmControlCustom.on('alternateChosen', function(e) {
 });
 
 // Route export
-lrmControl.on('routeselected', function(e) {
-  if (safetyEnabled) return;
+lrmControl.on('routeselected', function(e) { //here
   var route = e.route || {};
   var routeGeoJSON = {
     type: 'Feature',
@@ -330,8 +336,7 @@ lrmControl.on('routeselected', function(e) {
   toolsControl.setRouteGeoJSON(routeGeoJSON);
 });
 
-lrmControlCustom.on('routeselected', function(e) {
-  return;
+lrmControlCustom.on('routeselected', function(e) { //here
   if (!safetyEnabled) return;
   var route = e.route || {};
   var routeGeoJSON = {
@@ -357,7 +362,7 @@ lrmControlCustom.on('routeselected', function(e) {
   };
   toolsControl.setRouteGeoJSON(routeGeoJSON);
 });
-plan.on('waypointschanged', function(e) {
+plan.on('waypointschanged', function(e) { //here
   if (!e.waypoints ||
       e.waypoints.filter(function(wp) {
         return !wp.latLng;
