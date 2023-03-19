@@ -45,7 +45,7 @@ var streets = L.tileLayer(mapboxTileURL, {
 
 module.exports = {
   defaultState: {
-    center: L.latLng(38.8995,-77.0269),
+    center: L.latLng(43.466667,-80.516667),
     zoom: 13,
     waypoints: [],
     language: 'en',
