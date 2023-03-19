@@ -230,7 +230,7 @@ safetyToggle.onclick = function (e){
 
 // does the stuff above only happen once?
 var toolsControl = tools.control(localization.get(mergedOptions.language), localization.getLanguages(), options.tools).addTo(map);
-var state = state(map, lrmControl, lrmControlCustom, toolsControl, mergedOptions);
+var state = state(map, lrmControl, lrmControlCustom, toolsControl, mergedOptions, safetyEnabled);
 
 plan.on('waypointgeocoded', function(e) {
   if (plan._waypoints.filter(function(wp) {
@@ -250,6 +250,7 @@ map.on('click', function (e) {
 });
 function addWaypoint(waypoint) {
   if (safetyEnabled) {
+    return;
     var length = lrmControlCustom.getWaypoints().filter(function(pnt) {
       return pnt.latLng;
     });
@@ -289,6 +290,7 @@ lrmControl.on('alternateChosen', function(e) {
 });
 
 lrmControlCustom.on('alternateChosen', function(e) {
+  return;
   if (!safetyEnabled) return;
   var directions = document.querySelectorAll('.leaflet-routing-alt');
   if (directions[0].style.display != 'none') {
@@ -329,6 +331,7 @@ lrmControl.on('routeselected', function(e) {
 });
 
 lrmControlCustom.on('routeselected', function(e) {
+  return;
   if (!safetyEnabled) return;
   var route = e.route || {};
   var routeGeoJSON = {
