@@ -42,6 +42,7 @@ var State = L.Class.extend({
   set: function(options) {
     L.setOptions(this, options);
     this._lrm.setWaypoints(this.options.waypoints);
+    this._lrm_custom.setWaypoints(this.options.waypoints);
     this._map.setView(this.options.center, this.options.zoom);
   },
 
