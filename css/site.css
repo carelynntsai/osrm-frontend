@@ -6,7 +6,7 @@
 .safety-details,
 .route-information,
 .osrm-directions-instructions {
-  font:15px/20px 'Open Sans', sans-serif;
+  font:15px/20px 'Inter', sans-serif;
   margin-bottom: 30px;
 }
 
@@ -41,15 +41,15 @@
 
 /* tool colors and divs */
 .fill-osrm {
-  background-color:rgb(45, 114, 210, 0.85);
+  background-color:#5F6369;
 }
 
 .fill-dark {
-  background-color: #404040;
+  background-color: #5F6369;
 }
 
 .dark {
-  color: #fff;
+  color: #5F6369;
 }
 
 /*TODO: Move scale to the right
@@ -62,21 +62,35 @@
 
 /* Zoom control position */
 .leaflet-control-zoom {
-  left: 355px;
-    color:rgb(45, 114, 210, 0.85);
+  left: 96vw;
+  top: 87.3vh;
+  color:#8091B0;
+  padding: 1px;
+  border-radius: 4px;
+  border-width: 4px; 
+  background-color: white;
+  border-color: #000;
+  box-shadow: 2px 6px 12px rgb(0, 0, 0, 0.08);
+
 }
 
+/* zoom in/out */
 .leaflet-bar a {
-  color:rgb(45, 114, 210, 0.85);
+  color:#8091B0;
+  border-width: 2px;  
+  padding: 2px;
 }
 
+
+/* current location/target icon - disabled */
 .leaflet-control-locate.leaflet-bar a {
-  color:rgb(45, 114, 210, 0.85);
+  color:#2D72D2;
   background-image: url('../images/crosshairs.svg');
   width: 26px;
   height: 26px;
   border-radius: 4px;
   z-index: 100;
+  display: none;
 }
 
 /* Locate control */
@@ -88,8 +102,8 @@
 /* Layers position */
 .leaflet-control-layers {
   position: absolute;
-  right: 220px;
-  bottom: 10px;
+  right: 50px;
+  bottom: 24px;
 }
 
 .leaflet-control-layers-expanded {
@@ -98,16 +112,17 @@
 
 /* Layer styling */
 .leaflet-retina .leaflet-control-layers-toggle {
-    background-image: url('../images/layers.svg');
-    background-size: 26px 26px;
+    background-image: url('../images/saferwalk-layers.png');
+    background-size: 20px 20px;
 }
 
 .leaflet-control-layers-toggle {
-  background-image: url('../images/layers.svg');
-  width: 36px;
-  height: 36px;
-  background-color:rgb(45, 114, 210, 0.85);
-  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+  background-image: url('../images/saferwalk-layers.png');
+  width: 32px;
+  height: 32px;
+  margin-bottom: 2px;
+  background-color:#ffffff;
+  box-shadow: 2px 6px 12px rgb(0, 0, 0, 0.04);
   border-radius: 4px;
 }
 
@@ -119,20 +134,21 @@
 }
 
 .leaflet-control-layers-expanded {
-  padding: 6px 10px 6px 6px;
-  color: #fff;
-  background-color:rgb(45, 114, 210, 0.85);
+  padding: 10px 10px 10px 10px;
+  color: #031732;
+  background-color: #ffffff;
 }
 
 /* Toolbar */
 .leaflet-osrm-tools-container
 {
-  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
-  background-color:rgb(45, 114, 210, 0.85);
+  background-color:#2D72D2;
   border-radius: 4px;
-  width: 151px;
+  box-shadow: 2px 6px 12px rgb(0, 0, 0, 0.06);
+  width: 100px;
   height: 26px;
-  left: 50px;
+  left: 3.5vw;
+  display: none;
 }
 
 
@@ -141,8 +157,8 @@
 {
   background-color: rgba(0, 0, 0, 0.5);
   border-color: rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  color: #fff;
+  box-shadow: 2px 6px 12px rgb(0, 0, 0, 0.06);
+  color: #5F6369;
 }
 
 /* Geocode container */
@@ -155,6 +171,8 @@
   transition: 0.5s;
 }
 
+/*Logo container*/
+
 .leaflet-routing-container.dark {
   z-index: 10;
   background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.85);
@@ -162,15 +180,16 @@
   left: 0px;
   bottom: 0px;
   margin: 0px !important;
-  /* background-image: url('../images/osrm_logo.svg'); */
-  /* -webkit-background-size: 200px 60px;
-  background-size: 200px 60px;
-  background-position: -20px 10px;
+  background-image: url('../images/saferwalk-logo.png'); 
+  -webkit-background-size: 130px 32px;
+  background-size: 130px 32px;
+  background-position: 16px 16px;
   background-repeat: no-repeat;
-  padding-top: 50px; */
+  padding-top: 16px; 
 }
 
 .leaflet-routing-geocoders div {
+  top: 44px;
   padding: 4px 0px 4px 0px;
 }
 
@@ -190,17 +209,17 @@
 }
 
 .leaflet-routing-geocoders button {
-  font: bold 18px 'Lucida Console', Monaco, monospace;
+  font: bold 18px 'Inter', sans-serif; 
   margin: 0;
   margin-right: 3px;
   float: right;
   cursor: pointer;
-  background-color: rgb(45, 114, 210, 0.85);
+  background-color: #2D72D2;
   transition: background-color 0.2s ease;
   border: 0px;
   border-radius: 0 0 5px 5px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  /* -webkit-appearance: none;
+  -moz-appearance: none; */
   margin-right: 0px;
   color: white;
 }
@@ -274,9 +293,13 @@
 }
 
 /* OSRM + Leaflet toolbar icons */
+
+/* left panel */
+
 .leaflet-bar {
-  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+  box-shadow: 2px 6px 12px rgb(0, 0, 0, 0.06);
   border-radius: 4px;
+  background-color: white; /* doesn't work */
 }
 
 .leaflet-bottom .leaflet-control {
@@ -309,7 +332,7 @@
 .osrm-mapillary-icon  { background-position: -120px 0; }
 .osrm-gpx-icon  { background-position: -146px 0; }
 .osrm-localization-chooser {
-    color: #ffffff;
+    color: #5F6369;
     background: transparent;
     border: none;
     height: 24px;
@@ -333,48 +356,45 @@
 .osrm-directions-inputs {
   position: fixed;
   left: 10px;
-  top: 10px;
+  top: 14px;
   width: 45%;
   max-width: 350px;
   min-width: 200px;
   overflow: auto;
   max-height: 75%;
+  z-index: 1000000;
 }
 
 .leaflet-routing-geocoders.osrm-directions-inputs .leaflet-routing-geocoder:first-child input {
-  border-top: 0px;
-  border-right: 0px;
-  border-bottom: 0px;
+  border-width: 1.2px;
+  border-radius: 4px;
   height: 100%;
-  border-left-color: lime;
-  border-left-width: thick;
+  border-color: rgb(17, 20, 24, 0.20);
+  z-index: 1000000;
 }
 
 .leaflet-routing-geocoders.osrm-directions-inputs .leaflet-routing-geocoder:last-of-type input {
-  border-top: 0px;
-  border-right: 0px;
-  border-bottom: 0px;
+  border-width: 1.2px;
+  border-radius: 4px;
   height: 100%;
-  border-left-color: red;
-  border-left-width: thick;
+  border-color: rgb(17, 20, 24, 0.20);
 }
 
 .leaflet-routing-geocoders.osrm-directions-inputs .leaflet-routing-geocoder input {
-  border-top: 0px;
-  border-right: 0px;
-  border-bottom: 0px;
+  border-width: 1.2px;
+  border-radius: 4px;
   height: 100%;
-  border-left-color: white;
-  border-left-width: thick;
+  border-color: rgb(17, 20, 24, 0.20);
 }
 
 .osrm-directions-inputs input {
+  border-width: 0.5px;
   font-size: 12px;
   width: 90%;
   background-color: transparent;
-  color: rgba(0, 0, 0, 0.5);
-  height: 30px;
-  padding: 10px 10px 10px 20px;
+  color: #5F6369;
+  height: 40px;
+  padding: 10px 10px 10px 12px;
 }
 
 .osrm-directions-route-summary {
@@ -403,12 +423,12 @@
 .osrm-bear-left-icon        { background-position: -140px 0; }
 .osrm-depart-icon           {
 	background-position: -160px -1;
-	background-color: #87DE9F;
+	background-color: #2D72D2;
 }
 .osrm-enter-roundabout-icon { background-position: -180px 0; }
 .osrm-arrive-icon           {
 	background-position: -200px 0;
-	background-color: #DB5C0A;
+	background-color: #76AFFF;
 }
 .osrm-close-icon            { background-position: -220px 0; }
 .osrm-reverse-icon          { background-position: -240px 0; }
@@ -418,8 +438,8 @@
     display: block;
     background-color: #444;
     border-radius: 50%;
-    box-shadow: 0 0 5px 0 rgba(0,0,0,0.5);
-}
+    box-shadow: 2px 6px 12px rgb(0, 0, 0, 0.06);
+  }
 
 .osrm-marker-drag-icon-step {
     background-color: #3BB2D0;
@@ -552,7 +572,7 @@
 {
   width: 20px;
   height: 20px;
-  font-family: Arial;
+  font-family: 'Inter', sans-serif;
   font-variant: bold;
   font-size: 20px;
   color: #fff;
@@ -667,7 +687,7 @@ td.distance {
   border-width: 4px;
   color: #111;
   display: block;
-  font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font: 12px/20px 'Inter', sans-serif;
   font-weight: bold;
   padding: 1px 6px;
   position: absolute;
@@ -771,7 +791,7 @@ td.distance {
   copied over from leaflet-routing-machine.css
 */
 .leaflet-routing-geocoder-result {
-    font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font: 12px/1.5 'Inter', sans-serif;
     position: absolute;
     max-height: 0;
     overflow: hidden;
@@ -920,51 +940,58 @@ td.distance {
   z-index: 100000;
   position: fixed;
   left: 0px;
-  top: 100px;
-  padding: 5px;
-  padding-left: 10px;
+  top: 180px;
+  padding: 12px;
+  padding-top: 20px;
+  padding-left: 12px;
   width: 50%;
-  max-width: 350px;
-  border-bottom: 2px solid rgb(45, 114, 210, 0.85);
-  color: rgb(48, 48, 48);
+  max-width: 335px;
+  border-top: 1px solid rgb(17, 20, 24, 0.25);
+  border-bottom: 1px solid rgb(17, 20, 24, 0.25);
+  color: #031732;
+  font-size: 13px;
 }
 
 input[type=button], input[type=submit], input[type=reset] {
-  background-color: rgb(45, 114, 210, 0.85);
+  background-color: #2D72D2;
+  width: 310px;
   border: none;
   color: white;
   padding: 10px 20px;
   text-decoration: none;
   margin:auto;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 4px;
 }
+
 
 .safety-details{
   z-index: 100000;
   position: fixed;
   left: 10px;
-  top: 360px;
-  font-size: 12px;
-  padding: 5px;
-  padding-left: 10px;
+  top: 380px;
+  font-size: 13px;
+  padding: 12px;
+  padding-top: 16px;
   width: 50%;
   max-width: 320px;
-  color: rgb(48, 48, 48);
-  background-color: #ebebebf4;
+  color: #031732;
+  background-color: #F3F4F7;
   border-radius: 5px;
 }
 .route-information{
   z-index: 100000;
   position: fixed;
   left: 0px;
-  top: 260px;
+  top: 240px;
   padding: 5px;
   padding-left: 10px;
   width: 50%;
   max-width: 350px;
-  color: rgb(48, 48, 48);
+  color: #031732;
+  display: none;
 }
+
 h4{
   margin: 2px;
 }

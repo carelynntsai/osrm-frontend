@@ -24,3 +24,8 @@
          url('../fonts/opensans-condlight-webfont.woff2') format('woff2'),
          url('../fonts/opensans-condlight-webfont.woff') format('woff'),
 }
+
+@font-face {
+    font-family: 'Inter';
+    src: url('https://fonts.googleapis.com/css2?family=Inter:400,500,600,700');
+}
