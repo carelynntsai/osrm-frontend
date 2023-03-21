@@ -211,7 +211,7 @@ var routerCustom = (new L.Routing.OSRMv1(controlOptionsCustom));
 // CONTINUE HERE
 router._convertRouteOriginal = router._convertRoute;
 router._convertRoute = function(responseRoute) {
-  if (state.getServer() !== 0) return;
+  if (server !== 0) return;
   // monkey-patch L.Routing.OSRMv1 until it's easier to overwrite with a hook
   var resp = this._convertRouteOriginal(responseRoute);
 
@@ -231,7 +231,7 @@ router._convertRoute = function(responseRoute) {
 };
 routerLighting._convertRouteOriginal = routerLighting._convertRoute;
 routerLighting._convertRoute = function(responseRoute) {
-  if (state.getServer() !== 1) return;
+  if (server !== 1) return;
   // monkey-patch L.Routing.OSRMv1 until it's easier to overwrite with a hook
   var resp = this._convertRouteOriginal(responseRoute);
 
@@ -252,7 +252,7 @@ routerLighting._convertRoute = function(responseRoute) {
 
 routerSidewalks._convertRouteOriginal = routerSidewalks._convertRoute;
 routerSidewalks._convertRoute = function(responseRoute) {
-  if (state.getServer() !== 2) return;
+  if (server !== 2) return;
   // monkey-patch L.Routing.OSRMv1 until it's easier to overwrite with a hook
   var resp = this._convertRouteOriginal(responseRoute);
 
@@ -273,7 +273,7 @@ routerSidewalks._convertRoute = function(responseRoute) {
 
 routerCustom._convertRouteOriginal = routerCustom._convertRoute;
 routerCustom._convertRoute = function(responseRoute) {
-  if (state.getServer() !== 3) return;
+  if (server !== 3) return;
   // monkey-patch L.Routing.OSRMv1 until it's easier to overwrite with a hook
   var resp = this._convertRouteOriginal(responseRoute);
 
@@ -318,7 +318,7 @@ var state = state(map, lrmControl, lrmControlLighting, lrmControlSidewalks, lrmC
 function displayOnePanel() {
   var panels = document.querySelectorAll('.leaflet-routing-container');
   if (panels && panels.length > 1) {
-    switch (state.getServer()) {
+    switch (server) {
       case 0:
         panels[0].style.display = 'block';
         panels[1].style.display = 'none';
@@ -347,11 +347,13 @@ function displayOnePanel() {
 }
 document.getElementById('lightingCheckbox').onclick = function (e){
   state.setLighting(e.target.checked);
+  server = state.getServer();
   displayOnePanel()
 };
 
 document.getElementById('sidewalksCheckbox').onclick = function (e){
   state.setSidewalks(e.target.checked);
+  server = state.getServer();
   displayOnePanel()
 };
 displayOnePanel()
@@ -367,7 +369,7 @@ map.on('click', function (e){
   addWaypoint(e.latlng);
 });
 function addWaypoint(waypoint) {
-  switch (state.getServer()) {
+  switch (server) {
     case 0:
       var length = lrmControl.getWaypoints().filter(function(pnt) {
         return pnt.latLng;
@@ -420,7 +422,7 @@ function addWaypoint(waypoint) {
 
 // User selected routes
 lrmControl.on('alternateChosen', function(e) {
-  if (state.getServer() !== 0) return;
+  if (server !== 0) return;
   var directions = document.querySelectorAll('.leaflet-routing-alt');
   if (directions[0].style.display != 'none') {
     directions[0].style.display = 'none';
@@ -432,7 +434,7 @@ lrmControl.on('alternateChosen', function(e) {
 });
 
 lrmControlLighting.on('alternateChosen', function(e) {
-  if (state.getServer() !== 1) return;
+  if (server !== 1) return;
   var directions = document.querySelectorAll('.leaflet-routing-alt');
   if (directions[0].style.display != 'none') {
     directions[0].style.display = 'none';
@@ -444,7 +446,7 @@ lrmControlLighting.on('alternateChosen', function(e) {
 });
 
 lrmControlSidewalks.on('alternateChosen', function(e) {
-  if (state.getServer() !== 2) return;
+  if (server !== 2) return;
   var directions = document.querySelectorAll('.leaflet-routing-alt');
   if (directions[0].style.display != 'none') {
     directions[0].style.display = 'none';
@@ -456,7 +458,7 @@ lrmControlSidewalks.on('alternateChosen', function(e) {
 });
 
 lrmControlCustom.on('alternateChosen', function(e) {
-  if (state.getServer() !== 3) return;
+  if (server !== 3) return;
   var directions = document.querySelectorAll('.leaflet-routing-alt');
   if (directions[0].style.display != 'none') {
     directions[0].style.display = 'none';
@@ -469,7 +471,7 @@ lrmControlCustom.on('alternateChosen', function(e) {
 
 // Route export
 lrmControl.on('routeselected', function(e) { //here
-  if (state.getServer() !== 0) return;
+  if (server !== 0) return;
   var route = e.route || {};
   var routeGeoJSON = {
     type: 'Feature',
@@ -496,7 +498,7 @@ lrmControl.on('routeselected', function(e) { //here
 });
 
 lrmControlLighting.on('routeselected', function(e) { //here
-  if (state.getServer() !== 1) return;
+  if (server !== 1) return;
   var route = e.route || {};
   var routeGeoJSON = {
     type: 'Feature',
@@ -523,7 +525,7 @@ lrmControlLighting.on('routeselected', function(e) { //here
 });
 
 lrmControlSidewalks.on('routeselected', function(e) { //here
-  if (state.getServer() !== 2) return;
+  if (server !== 2) return;
   var route = e.route || {};
   var routeGeoJSON = {
     type: 'Feature',
@@ -550,7 +552,7 @@ lrmControlSidewalks.on('routeselected', function(e) { //here
 });
 
 lrmControlCustom.on('routeselected', function(e) { //here
-  if (state.getServer() !== 3) return;
+  if (server !== 3) return;
   var route = e.route || {};
   var routeGeoJSON = {
     type: 'Feature',
