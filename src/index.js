@@ -291,34 +291,7 @@ checkbox.onAdd = function(map) {
 };
 
 checkbox.addTo(map);
-// add the event handler
-// function handleCommand() {
-//   alert("Clicked, checked = " + this.checked);
-// }
-// document.getElementById ("safety_factors").addEventListener ("click", handleCommand, false);
-
-// var routeInfo = L.control();
-// routeInfo.onAdd = function(map) {
-//   var div = L.DomUtil.create('div', 'route-information');
-
-//   div.innerHTML = '<h3>Route Information</h3>'
-
-//   return div;
-// };
 
 routeInfo.addTo(map);
-
-// var safetyDetails = L.control();
-// safetyDetails.onAdd = function(map) {
-//   var div = L.DomUtil.create('div', 'safety-details');
-
-//   // div.innerHTML = '<H4>Safety Details</H4>\
-//   // <p>Lighting: Good <br> Sidewalks: 90% <br> Average nearby road speeds: 50km/h </p>'
-
-//   div.onscroll
-
-//   return div;
-
-// };
 
 safetyDetails.addTo(map);
