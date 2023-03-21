@@ -226,7 +226,7 @@ var routerSidewalks = (new L.Routing.OSRMv1(controlOptionsSidewalks));
 var routerCustom = (new L.Routing.OSRMv1(controlOptionsCustom));
 
 var server = 0;
-// CONTINUE HERE
+
 router._convertRouteOriginal = router._convertRoute;
 router._convertRoute = function(responseRoute) {
   if (server !== 0) return;
@@ -362,15 +362,15 @@ function displayOnePanel() {
   }
 }
 document.getElementById('lightingCheckbox').onclick = function (e) {
-  server = e.target.checked ? 1 : 0
   state.setLighting(e.target.checked);
+  server = state.getServer();
   e.stopPropagation();
   displayOnePanel();
 };
 
 document.getElementById('sidewalksCheckbox').onclick = function (e) {
-  server = e.target.checked ? 2 : 0
   state.setSidewalks(e.target.checked);
+  server = state.getServer();
   e.stopPropagation();
   displayOnePanel();
 };
