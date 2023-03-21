@@ -6,7 +6,7 @@
 .safety-details,
 .route-information,
 .osrm-directions-instructions {
-  font:15px/20px 'Inter', sans-serif;
+  font:12px/16px 'Inter', sans-serif;
   margin-bottom: 30px;
 }
 
@@ -205,7 +205,7 @@
   float: left;
   width: 25px;
   height: 25px;
-  background-color: white;
+  background-color: #2D72D2;
 }
 
 .leaflet-routing-geocoders button {
@@ -214,28 +214,39 @@
   margin-right: 3px;
   float: right;
   cursor: pointer;
-  background-color: #2D72D2;
+  background-color:#dfe2e7;
   transition: background-color 0.2s ease;
-  border: 0px;
-  border-radius: 0 0 5px 5px;
+  border-width: 1px;
+  border-color: rgb(17, 20, 24, 0.2);
+  border-radius: 4px;
+  margin: 8px;
   /* -webkit-appearance: none;
   -moz-appearance: none; */
   margin-right: 0px;
-  color: white;
+  color: #2D72D2;
 }
 
 .leaflet-routing-add-waypoint {
-  display: block;
+  position: relative;
+  z-index: 1000;
+  display: none;
 }
 
 .leaflet-routing-add-waypoint:after {
   content: ' + ';
 }
 
+.leaflet-routing-reverse-waypoints {
+  position: relative;
+  z-index: 1000;
+  display: none;
+}
+
 .leaflet-routing-reverse-waypoints:after {
-  font-weight: bold;
-  content: '\21c5';
-  color: white;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  content: " ⇅ ";
 }
 
 .leaflet-routing-remove-waypoint {
@@ -356,25 +367,26 @@
 .osrm-directions-inputs {
   position: fixed;
   left: 10px;
-  top: 14px;
+  top: 16px;
   width: 45%;
   height: 100%;
   max-width: 350px;
   min-width: 200px;
   overflow: auto;
-  max-height: 75%;
-  z-index: 1000000;
+  max-height: 100%;
+  
 }
 
 .leaflet-routing-geocoders.osrm-directions-inputs .leaflet-routing-geocoder:first-child input {
+  z-index: 1;
   border-width: 1.2px;
   border-radius: 4px;
   height: 100%;
   border-color: rgb(17, 20, 24, 0.20);
-  z-index: 1000000;
 }
 
 .leaflet-routing-geocoders.osrm-directions-inputs .leaflet-routing-geocoder:last-of-type input {
+  z-index: 1;
   border-width: 1.2px;
   border-radius: 4px;
   height: 100%;
@@ -382,6 +394,7 @@
 }
 
 .leaflet-routing-geocoders.osrm-directions-inputs .leaflet-routing-geocoder input {
+  z-index: 1;
   border-width: 1.2px;
   border-radius: 4px;
   height: 100%;
@@ -389,6 +402,7 @@
 }
 
 .osrm-directions-inputs input {
+  z-index: 1;
   border-width: 0.5px;
   font-size: 12px;
   width: 90%;
@@ -753,7 +767,8 @@ td.distance {
   }
   .leaflet-routing-container.dark {
     z-index: 10;
-    background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.85);
+    background: none repeat scroll 0% 0% rgba(255, 255, 255);
+    opacity: 1;
     top: 0px;
     right: 0px;
     bottom: 0px;
@@ -861,7 +876,7 @@ td.distance {
 
 .leaflet-routing-container.dark {
   z-index: 10;
-  background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.85);
+  background: none repeat scroll 0% 0% rgba(255, 255, 255);
   top: 0px;
   right: 0px;
   bottom: 0px;
@@ -905,7 +920,7 @@ td.distance {
 
 }
 
-/* .leaflet-routing-collapse-btn {
+.leaflet-routing-collapse-btn {
     position: fixed;
     top: 10px;
     right: 10px;
@@ -929,7 +944,7 @@ td.distance {
 
 .leaflet-routing-container-hide .leaflet-routing-collapse-btn:after {
     content: '\2039';
-} */
+} 
 
 .leaflet-routing-container-hide.dark, .leaflet-routing-container-hide .leaflet-routing-alternatives-container {
     margin-right: -400px !important;
@@ -940,16 +955,17 @@ td.distance {
   z-index: 100000;
   position: fixed;
   left: 0px;
-  top: 150px;
+  top: 156px;
   padding: 12px;
-  padding-top: 20px;
+  padding-top: 12px;
   padding-left: 12px;
   width: 50%;
   max-width: 335px;
-  border-top: 1px solid rgb(17, 20, 24, 0.25);
-  border-bottom: 1px solid rgb(17, 20, 24, 0.25);
+  border-top: 1px solid rgb(17, 20, 24, 0.20);
+  border-bottom: 1px solid rgb(17, 20, 24, 0.20);
   color: #031732;
   font-size: 13px;
+  transition: 0.5s;
 }
 
 input[type=button], input[type=submit], input[type=reset] {
@@ -964,6 +980,36 @@ input[type=button], input[type=submit], input[type=reset] {
   border-radius: 4px;
 }
 
+.checkbox-container-collapse-btn {
+  position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: rgb(45, 114, 210, 0.85);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 18px;
+    justify-content:center;
+    align-items: center;
+    color: white;
+    z-index: 50;
+}
+
+.checkbox-container-collapse-btn:after {
+  content: '\203a';
+}
+
+.checkbox-container-hide .checkbox-container-collapse-btn:after {
+  content: '\2039';
+} 
+
+.checkbox-container-hide.dark, .checkbox-container-hide .checkbox-alternatives-container {
+  margin-right: -400px !important;
+  transition: 0.5s;
+}
 
 .safety-details{
   z-index: 100000;
