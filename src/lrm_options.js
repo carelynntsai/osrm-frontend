@@ -30,7 +30,7 @@ module.exports = {
     ],
     routeWhileDragging: true,
     summaryTemplate: '<div class="route-information"> \
-        <div class="osrm-directions-summary"> <h2 style="margin-bottom:0px;"> Route Information </h2><h3>Distance: {distance}, <br> Time: {time}</h3> </div>\
+        <div class="osrm-directions-summary"> <H4> Route Information </H4><h3><span style="font-weight: 700;">Distance:</span> {distance} <br> <span style="font-weight: 700;">Time: </span>{time}</h3> </div>\
            <div class="safety-details">  <H4>Safety Details</H4>\
            <p>Lighting: Good <br> Sidewalks: 90% <br> Average nearby road speeds: 50km/h </p>\
         </div> \
@@ -40,7 +40,6 @@ module.exports = {
     stepClassName: 'osrm-directions-step',
     geocodersClassName: 'osrm-directions-inputs',
     createGeocoder: createGeocoder,
-    // createCheckboxes: createCheckboxes,
     showAlternatives: true,
     useZoomParameter: false,
     routeDragInterval: 200,

@@ -67,17 +67,6 @@ var ReversablePlan = L.Routing.Plan.extend({
   }
 });
 
-function createCheckboxes() {
-  command.addTo(map);
-
-  // add the event handler
-  function handleCommand() {
-    alert("Clicked, checked = " + this.checked);
-  }
-  document.getElementById ("safety_factors").addEventListener ("click", handleCommand, false);
-
-
-};
 
 /* Setup markers */
 function makeIcon(i, n) {
@@ -90,7 +79,7 @@ function makeIcon(i, n) {
       iconAnchor: [10, 28]
     });
   }
-  
+
   if (i === n - 1) {
     return L.icon({
       iconUrl: markerList[1],
@@ -150,7 +139,6 @@ var controlOptions = {
   routeWhileDragging: options.lrm.routeWhileDragging,
   lineOptions: options.lrm.lineOptions,
   altLineOptions: options.lrm.altLineOptions,
-  safetyDetails: options.lrm.safetyDetails,
   summaryTemplate: options.lrm.summaryTemplate,
   containerClassName: options.lrm.containerClassName,
   alternativeClassName: options.lrm.alternativeClassName,
@@ -199,7 +187,11 @@ plan.on('waypointgeocoded', function(e) {
 
 // add onClick event
 map.on('click', function (e) {
+  // console.log(e.clientX)
+  // if (e.clientX >360) {
   addWaypoint(e.latlng);
+  // }
+
 });
 function addWaypoint(waypoint) {
   var length = lrmControl.getWaypoints().filter(function(pnt) {
@@ -291,7 +283,3 @@ checkbox.onAdd = function(map) {
 };
 
 checkbox.addTo(map);
-
-routeInfo.addTo(map);
-
-safetyDetails.addTo(map);

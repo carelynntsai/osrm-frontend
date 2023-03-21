@@ -6,13 +6,12 @@
 .safety-details,
 .route-information,
 .osrm-directions-instructions {
-  font:12px/16px 'Inter', sans-serif;
+  font:12px 'Inter', sans-serif;
   margin-bottom: 30px;
 }
 
 .osrm-directions-summary {
-  padding-left: 20px;
-  padding-top: 10px;
+  padding: 12px;
 }
 
 .osrm-directions-inputs,
@@ -34,7 +33,6 @@
     width: 100%;
     height: 100%;
     top: 0;
-    right: 0;
     bottom: 0;
     left: 360px;
 }
@@ -62,8 +60,9 @@
 
 /* Zoom control position */
 .leaflet-control-zoom {
-  left: 96vw;
-  top: 87.3vh;
+  position: fixed;
+  right: 27px;
+  bottom: 3px;
   color:#8091B0;
   padding: 1px;
   border-radius: 4px;
@@ -101,9 +100,9 @@
 
 /* Layers position */
 .leaflet-control-layers {
-  position: absolute;
-  right: 50px;
-  bottom: 24px;
+  position: fixed;
+  right: 64px;
+  bottom: 22px;
 }
 
 .leaflet-control-layers-expanded {
@@ -112,12 +111,12 @@
 
 /* Layer styling */
 .leaflet-retina .leaflet-control-layers-toggle {
-    background-image: url('../images/saferwalk-layers.png');
-    background-size: 20px 20px;
+    background-image: url('../images/layers.png');
+    background-size: 12px 12px;
 }
 
 .leaflet-control-layers-toggle {
-  background-image: url('../images/saferwalk-layers.png');
+  background-image: url('../images/layers.png');
   width: 32px;
   height: 32px;
   margin-bottom: 2px;
@@ -374,7 +373,7 @@
   min-width: 200px;
   overflow: auto;
   max-height: 100%;
-  
+
 }
 
 .leaflet-routing-geocoders.osrm-directions-inputs .leaflet-routing-geocoder:first-child input {
@@ -534,7 +533,7 @@
 /* Directions Summary */
 .osrm-directions-summary
 {
-  color:rgb(62, 78, 142);
+  color: #031732;
   font-weight: bold !important;
 }
 
@@ -545,13 +544,13 @@
 
 .leaflet-routing-alt-minimized .osrm-directions-summary
 {
-  color:rgb(45, 114, 210, 0.85);
+  color:#2D72D2;
   padding-top: 80px;
 }
 
 .leaflet-routing-alt table td,
 .leaflet-routing-alt table {
-  color:rgb(45, 114, 210, 0.85);
+  color:#2D72D2;
   padding: 5px;
   padding-bottom: 10px;
   padding-left: 10px;
@@ -580,6 +579,8 @@
 .osrm-directions-summary h3
 {
   font-weight: normal;
+  color: #2d72d2;
+
 }
 
 .leaflet-osrm-geocoder-label
@@ -859,7 +860,7 @@ td.distance {
 
 .osrm-directions-summary h3 {
   font-size: 12px;
-  margin-left: -25px;
+  color: #2d72d2;
 }
 
 .osrm-directions-inputs input {
@@ -920,32 +921,6 @@ td.distance {
 
 }
 
-.leaflet-routing-collapse-btn {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    background-color: rgb(45, 114, 210, 0.85);
-    width: 36px;
-    height: 36px;
-    display: flex;
-    cursor: pointer;
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: 18px;
-    justify-content:center;
-    align-items: center;
-    color: white;
-    z-index: 50;
-}
-
-.leaflet-routing-collapse-btn:after {
-    content: '\203a';
-}
-
-.leaflet-routing-container-hide .leaflet-routing-collapse-btn:after {
-    content: '\2039';
-} 
-
 .leaflet-routing-container-hide.dark, .leaflet-routing-container-hide .leaflet-routing-alternatives-container {
     margin-right: -400px !important;
     transition: 0.5s;
@@ -963,6 +938,7 @@ td.distance {
   max-width: 335px;
   border-top: 1px solid rgb(17, 20, 24, 0.20);
   border-bottom: 1px solid rgb(17, 20, 24, 0.20);
+  background-color: #ffffff;
   color: #031732;
   font-size: 13px;
   transition: 0.5s;
@@ -980,54 +956,21 @@ input[type=button], input[type=submit], input[type=reset] {
   border-radius: 4px;
 }
 
-.checkbox-container-collapse-btn {
-  position: fixed;
-    top: 10px;
-    right: 10px;
-    background-color: rgb(45, 114, 210, 0.85);
-    width: 36px;
-    height: 36px;
-    display: flex;
-    cursor: pointer;
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: 18px;
-    justify-content:center;
-    align-items: center;
-    color: white;
-    z-index: 50;
-}
-
-.checkbox-container-collapse-btn:after {
-  content: '\203a';
-}
-
-.checkbox-container-hide .checkbox-container-collapse-btn:after {
-  content: '\2039';
-} 
-
-.checkbox-container-hide.dark, .checkbox-container-hide .checkbox-alternatives-container {
-  margin-right: -400px !important;
-  transition: 0.5s;
-}
 
 .safety-details{
   z-index: 100000;
   font-size: 13px;
   padding: 12px;
-  padding-left: 10px;
-  margin-left: 10px;
-  margin-bottom: 0px;
   padding-top: 16px;
-  /* width: 50%;
-  max-width: 320px; */
+  margin: 4px;
   color: #031732;
-  background-color: #F3F4F7;
+  background-color: #f0f4ff;
   border-radius: 5px;
 }
 .route-information{
-  padding: 5px;
-  padding-left: 10px;
+
+  margin-top: 32px;
+  padding-left: 8px;
   width: 100%;
   max-width: 350px;
   color: #031732;
@@ -1039,4 +982,7 @@ input[type=button], input[type=submit], input[type=reset] {
 
 h4{
   margin: 2px;
+  font-size: 13px;
+  font-style: bold;
+  color: #0c213d;
 }
