@@ -210,6 +210,8 @@ var router = (new L.Routing.OSRMv1(controlOptions));
 var routerLighting = (new L.Routing.OSRMv1(controlOptionsLighting));
 var routerSidewalks = (new L.Routing.OSRMv1(controlOptionsSidewalks));
 var routerCustom = (new L.Routing.OSRMv1(controlOptionsCustom));
+
+var server = 0;
 // CONTINUE HERE
 router._convertRouteOriginal = router._convertRoute;
 router._convertRoute = function(responseRoute) {
@@ -310,8 +312,6 @@ var lrmControlCustom = L.Routing.control(Object.assign(controlOptionsCustom, {
   router: routerCustom
 })).addTo(map);
 
-var server = 0;
-
 // does the stuff above only happen once?
 var toolsControl = tools.control(localization.get(mergedOptions.language), localization.getLanguages(), options.tools).addTo(map);
 var state = state(map, lrmControl, lrmControlLighting, lrmControlSidewalks, lrmControlCustom, toolsControl, mergedOptions);
@@ -347,17 +347,17 @@ function displayOnePanel() {
     }
   }
 }
-document.getElementById('lightingCheckbox').onclick = function (e){
+document.getElementById('lightingCheckbox').onclick = function (e) {
+  server = e.target.checked ? 1 : 0
   state.setLighting(e.target.checked);
-  server = state.getServer();
   displayOnePanel()
 };
 
 // test
 
-document.getElementById('sidewalksCheckbox').onclick = function (e){
+document.getElementById('sidewalksCheckbox').onclick = function (e) {
+  server = e.target.checked ? 2 : 0
   state.setSidewalks(e.target.checked);
-  server = state.getServer();
   displayOnePanel()
 };
 displayOnePanel()
