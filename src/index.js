@@ -39,6 +39,21 @@ mapLayer = mapLayer.reduce(function(title, layer) {
   return title;
 });
 
+var checkbox = L.control();
+checkbox.onAdd = function() {
+  var div = L.DomUtil.create('div', 'checkbox-container');
+
+  div.innerHTML = '<form name="preferences" <legend> Safety Preferences</legend> \
+   <fieldset style="border: 0;"> \
+   <input type="checkbox" id="lightingCheckbox" name="safety_factors" value="Lighting">Lighting<br> \
+   <input type="checkbox" id="sidewalksCheckbox" name="safety_factors" value="Sidewalks">Sidewalks<br> \
+   <input type="checkbox" id="speedCheckbox" name="safety_factors" value="Road Speed">Road speed<br> \
+   </fieldset>'
+
+  return div;
+};
+checkbox.addTo(map);
+
 /* Leaflet Controls */
 L.control.layers(mapLayer, overlay, {
   position: 'bottomright'
@@ -66,7 +81,6 @@ var ReversablePlan = L.Routing.Plan.extend({
     return container;
   }
 });
-
 
 /* Setup markers */
 function makeIcon(i, n) {
@@ -350,16 +364,21 @@ function displayOnePanel() {
 document.getElementById('lightingCheckbox').onclick = function (e) {
   server = e.target.checked ? 1 : 0
   state.setLighting(e.target.checked);
-  displayOnePanel()
+  e.stopPropagation();
+  displayOnePanel();
 };
-
-// test
 
 document.getElementById('sidewalksCheckbox').onclick = function (e) {
   server = e.target.checked ? 2 : 0
   state.setSidewalks(e.target.checked);
-  displayOnePanel()
+  e.stopPropagation();
+  displayOnePanel();
 };
+
+document.getElementById('speedCheckbox').onclick = function (e) {
+  e.stopPropagation();
+};
+
 displayOnePanel()
 
 plan.on('waypointgeocoded', function(e) {
@@ -611,18 +630,3 @@ L.control.locate({
   showPopup: false,
   locateOptions: {}
 }).addTo(map);
-
-var checkbox = L.control();
-checkbox.onAdd = function(map) {
-  var div = L.DomUtil.create('div', 'checkbox-container');
-
-  div.innerHTML = '<form name="preferences"> <h4 style="padding-left:8px">Safety Preferences</h4> \
-   <fieldset style="border: 0;"> <input type="checkbox" name="safety_factors" value="Lighting">Lighting<br> \
-   <input type="checkbox" name="safety_factors" value="Sidewalks">Sidewalks<br> \
-   <input type="checkbox" name="safety_factors" value="Road Speed">Road speed<br> \
-   <input type="submit" name="save-safety-factors" value="Save" style="color=blue"; /> </fieldset>'
-
-  return div;
-};
-
-checkbox.addTo(map);
