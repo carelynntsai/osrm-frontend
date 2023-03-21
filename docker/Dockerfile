@@ -4,6 +4,8 @@ FROM alpine:3.7
 
 # Backends
 ENV OSRM_BACKEND='http://localhost:5000'
+ENV OSRM_BACKEND_LIGHTING='http://localhost:5002'
+ENV OSRM_BACKEND_SIDEWALKS='http://localhost:5003'
 ENV OSRM_BACKEND_CUSTOM='http://localhost:5001'
 
 ENV OSRM_CENTER='43.466667, -80.516667'

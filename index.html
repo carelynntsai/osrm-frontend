@@ -13,13 +13,18 @@
   </head>
   <body>
     <div style="
-    top: 50px;
+    top: 150px;
     z-index: 100000;
     position: absolute;
-    right: 5px;
+    left: 10px;
+    background-color: white;
+    padding: 5px;
     ">
-      <input type="checkbox" id="safetyCheckbox" name="safetyCheckbox">
-      <label for="safetyCheckbox" >Safety</label><br>
+    Safety Preferences<br><br>
+      <input type="checkbox" id="lightingCheckbox" name="lightingCheckbox">
+      <label for="lightingCheckbox" >Lighting</label><br>
+      <input type="checkbox" id="sidewalksCheckbox" name="sidewalksCheckbox">
+      <label for="sidewalksCheckbox" >Sidewalks</label><br>
     </div>
     <div id='map' class='map'></div> 
     <!-- add z index attribute? -->
