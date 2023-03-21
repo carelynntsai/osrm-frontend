@@ -39,7 +39,6 @@ mapLayer = mapLayer.reduce(function(title, layer) {
   return title;
 });
 
-
 /* Leaflet Controls */
 L.control.layers(mapLayer, overlay, {
   position: 'bottomright'
@@ -91,6 +90,7 @@ function makeIcon(i, n) {
       iconAnchor: [10, 28]
     });
   }
+  
   if (i === n - 1) {
     return L.icon({
       iconUrl: markerList[1],
@@ -282,7 +282,7 @@ var checkbox = L.control();
 checkbox.onAdd = function(map) {
   var div = L.DomUtil.create('div', 'checkbox-container');
 
-  div.innerHTML = '<form name="preferences" <legend> Safety Preferences</legend> \
+  div.innerHTML = '<form name="preferences"> <h4 style="padding-left:8px">Safety Preferences</h4> \
    <fieldset style="border: 0;"> <input type="checkbox" name="safety_factors" value="Lighting">Lighting<br> \
    <input type="checkbox" name="safety_factors" value="Sidewalks">Sidewalks<br> \
    <input type="checkbox" name="safety_factors" value="Road Speed">Road speed<br> \
