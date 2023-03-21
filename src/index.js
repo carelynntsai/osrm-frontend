@@ -67,17 +67,17 @@ var ReversablePlan = L.Routing.Plan.extend({
   }
 });
 
-// function createCheckboxes() {
-//   command.addTo(map);
+function createCheckboxes() {
+  command.addTo(map);
 
-//   // add the event handler
-//   function handleCommand() {
-//     alert("Clicked, checked = " + this.checked);
-//   }
-//   document.getElementById ("safety_factors").addEventListener ("click", handleCommand, false);
+  // add the event handler
+  function handleCommand() {
+    alert("Clicked, checked = " + this.checked);
+  }
+  document.getElementById ("safety_factors").addEventListener ("click", handleCommand, false);
 
 
-// };
+};
 
 /* Setup markers */
 function makeIcon(i, n) {
@@ -150,9 +150,8 @@ var controlOptions = {
   routeWhileDragging: options.lrm.routeWhileDragging,
   lineOptions: options.lrm.lineOptions,
   altLineOptions: options.lrm.altLineOptions,
-  summaryTemplate: options.lrm.summaryTemplate,
   safetyDetails: options.lrm.safetyDetails,
-  checkboxes: options.lrm.checkboxes,
+  summaryTemplate: options.lrm.summaryTemplate,
   containerClassName: options.lrm.containerClassName,
   alternativeClassName: options.lrm.alternativeClassName,
   stepClassName: options.lrm.stepClassName,
@@ -286,7 +285,7 @@ checkbox.onAdd = function(map) {
    <fieldset style="border: 0;"> <input type="checkbox" name="safety_factors" value="Lighting">Lighting<br> \
    <input type="checkbox" name="safety_factors" value="Sidewalks">Sidewalks<br> \
    <input type="checkbox" name="safety_factors" value="Road Speed">Road speed<br> \
-  <br> <input type="submit" name="save-safety-factors" value="Save" style="color=blue"; /> </fieldset>'
+   <input type="submit" name="save-safety-factors" value="Save" style="color=blue"; /> </fieldset>'
 
   return div;
 };
@@ -298,24 +297,28 @@ checkbox.addTo(map);
 // }
 // document.getElementById ("safety_factors").addEventListener ("click", handleCommand, false);
 
-var routeInfo = L.control();
-routeInfo.onAdd = function(map) {
-  var div = L.DomUtil.create('div', 'route-information');
+// var routeInfo = L.control();
+// routeInfo.onAdd = function(map) {
+//   var div = L.DomUtil.create('div', 'route-information');
 
-  div.innerHTML = '<h3>Route Information</h3>'
+//   div.innerHTML = '<h3>Route Information</h3>'
 
-  return div;
-};
+//   return div;
+// };
 
 routeInfo.addTo(map);
 
-var safetyDetails = L.control();
-safetyDetails.onAdd = function(map) {
-  var div = L.DomUtil.create('div', 'safety-details');
+// var safetyDetails = L.control();
+// safetyDetails.onAdd = function(map) {
+//   var div = L.DomUtil.create('div', 'safety-details');
 
-  div.innerHTML = '<H4>Safety Details</H4>\
-  <p>Lighting: Good <br> Sidewalks: 90% <br> Average nearby road speeds: 50km/h </p>'
+//   // div.innerHTML = '<H4>Safety Details</H4>\
+//   // <p>Lighting: Good <br> Sidewalks: 90% <br> Average nearby road speeds: 50km/h </p>'
 
-  return div;
-};
+//   div.onscroll
+
+//   return div;
+
+// };
+
 safetyDetails.addTo(map);

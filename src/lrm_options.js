@@ -29,8 +29,12 @@ module.exports = {
       {color: 'white', opacity: 0.8, weight: 7}
     ],
     routeWhileDragging: true,
-    safetyDetails: '<div class="osrm-directions-summary"><h3>Lighting</h3></div>',
-    summaryTemplate: '<div class="osrm-directions-summary"><h3>Distance: {distance}, <br> Time: {time}</h3></div>',
+    summaryTemplate: '<div class="route-information"> \
+        <div class="osrm-directions-summary"> <h2 style="margin-bottom:0px;"> Route Information </h2><h3>Distance: {distance}, <br> Time: {time}</h3> </div>\
+           <div class="safety-details">  <H4>Safety Details</H4>\
+           <p>Lighting: Good <br> Sidewalks: 90% <br> Average nearby road speeds: 50km/h </p>\
+        </div> \
+      </div>',
     containerClassName: 'dark pad2',
     alternativeClassName: 'osrm-directions-instructions',
     stepClassName: 'osrm-directions-step',
