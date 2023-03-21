@@ -353,6 +353,8 @@ document.getElementById('lightingCheckbox').onclick = function (e){
   displayOnePanel()
 };
 
+// test
+
 document.getElementById('sidewalksCheckbox').onclick = function (e){
   state.setSidewalks(e.target.checked);
   server = state.getServer();
