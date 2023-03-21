@@ -150,6 +150,42 @@ var controlOptions = {
   collapsible: options.lrm.collapsible
 };
 
+var controlOptionsLighting = {
+  plan: plan,
+  routeWhileDragging: options.lrm.routeWhileDragging,
+  lineOptions: options.lrm.lineOptions,
+  altLineOptions: options.lrm.altLineOptions,
+  summaryTemplate: options.lrm.summaryTemplate,
+  containerClassName: options.lrm.containerClassName,
+  alternativeClassName: options.lrm.alternativeClassName,
+  stepClassName: options.lrm.stepClassName,
+  language: 'en', // we are injecting own translations via osrm-text-instructions
+  showAlternatives: options.lrm.showAlternatives,
+  units: mergedOptions.units,
+  serviceUrl: leafletOptions.services[0].pathLighting,
+  useZoomParameter: options.lrm.useZoomParameter,
+  routeDragInterval: options.lrm.routeDragInterval,
+  collapsible: options.lrm.collapsible
+};
+
+var controlOptionsSidewalks = {
+  plan: plan,
+  routeWhileDragging: options.lrm.routeWhileDragging,
+  lineOptions: options.lrm.lineOptions,
+  altLineOptions: options.lrm.altLineOptions,
+  summaryTemplate: options.lrm.summaryTemplate,
+  containerClassName: options.lrm.containerClassName,
+  alternativeClassName: options.lrm.alternativeClassName,
+  stepClassName: options.lrm.stepClassName,
+  language: 'en', // we are injecting own translations via osrm-text-instructions
+  showAlternatives: options.lrm.showAlternatives,
+  units: mergedOptions.units,
+  serviceUrl: leafletOptions.services[0].pathSidewalks,
+  useZoomParameter: options.lrm.useZoomParameter,
+  routeDragInterval: options.lrm.routeDragInterval,
+  collapsible: options.lrm.collapsible
+};
+
 var controlOptionsCustom = {
   plan: plan,
   routeWhileDragging: options.lrm.routeWhileDragging,
@@ -169,11 +205,54 @@ var controlOptionsCustom = {
 };
 
 var router = (new L.Routing.OSRMv1(controlOptions));
+var routerLighting = (new L.Routing.OSRMv1(controlOptionsLighting));
+var routerSidewalks = (new L.Routing.OSRMv1(controlOptionsSidewalks));
 var routerCustom = (new L.Routing.OSRMv1(controlOptionsCustom));
-
+// CONTINUE HERE
 router._convertRouteOriginal = router._convertRoute;
 router._convertRoute = function(responseRoute) {
-  if (safetyEnabled) return;
+  if (state.getServer() !== 0) return;
+  // monkey-patch L.Routing.OSRMv1 until it's easier to overwrite with a hook
+  var resp = this._convertRouteOriginal(responseRoute);
+
+  if (resp.instructions && resp.instructions.length) {
+    var i = 0;
+    responseRoute.legs.forEach(function(leg) {
+      leg.steps.forEach(function(step) {
+        // abusing the text property to save the original osrm step
+        // for later use in the itnerary builder
+        resp.instructions[i].text = step;
+        i++;
+      });
+    });
+  };
+
+  return resp;
+};
+routerLighting._convertRouteOriginal = routerLighting._convertRoute;
+routerLighting._convertRoute = function(responseRoute) {
+  if (state.getServer() !== 1) return;
+  // monkey-patch L.Routing.OSRMv1 until it's easier to overwrite with a hook
+  var resp = this._convertRouteOriginal(responseRoute);
+
+  if (resp.instructions && resp.instructions.length) {
+    var i = 0;
+    responseRoute.legs.forEach(function(leg) {
+      leg.steps.forEach(function(step) {
+        // abusing the text property to save the original osrm step
+        // for later use in the itnerary builder
+        resp.instructions[i].text = step;
+        i++;
+      });
+    });
+  };
+
+  return resp;
+};
+
+routerSidewalks._convertRouteOriginal = routerSidewalks._convertRoute;
+routerSidewalks._convertRoute = function(responseRoute) {
+  if (state.getServer() !== 2) return;
   // monkey-patch L.Routing.OSRMv1 until it's easier to overwrite with a hook
   var resp = this._convertRouteOriginal(responseRoute);
 
@@ -194,7 +273,7 @@ router._convertRoute = function(responseRoute) {
 
 routerCustom._convertRouteOriginal = routerCustom._convertRoute;
 routerCustom._convertRoute = function(responseRoute) {
-  if (!safetyEnabled) return;
+  if (state.getServer() !== 3) return;
   // monkey-patch L.Routing.OSRMv1 until it's easier to overwrite with a hook
   var resp = this._convertRouteOriginal(responseRoute);
 
@@ -217,33 +296,62 @@ var lrmControl = L.Routing.control(Object.assign(controlOptions, {
   router: router
 })).addTo(map);
 
+var lrmControlLighting = L.Routing.control(Object.assign(controlOptionsLighting, {
+  router: routerLighting
+})).addTo(map);
+
+var lrmControlSidewalks = L.Routing.control(Object.assign(controlOptionsSidewalks, {
+  router: routerSidewalks
+})).addTo(map);
+
 var lrmControlCustom = L.Routing.control(Object.assign(controlOptionsCustom, {
   router: routerCustom
 })).addTo(map);
 
+var server = 0;
 
 // does the stuff above only happen once?
 var toolsControl = tools.control(localization.get(mergedOptions.language), localization.getLanguages(), options.tools).addTo(map);
-var state = state(map, lrmControl, lrmControlCustom, toolsControl, mergedOptions);
+var state = state(map, lrmControl, lrmControlLighting, lrmControlSidewalks, lrmControlCustom, toolsControl, mergedOptions);
 
 // User selected safetyPreferences
-var safetyEnabled = false;
 function displayOnePanel() {
   var panels = document.querySelectorAll('.leaflet-routing-container');
   if (panels && panels.length > 1) {
-    if (safetyEnabled) {
-      panels[0].style.display = 'none';
-      panels[1].style.display = 'block';
-    } else {
-      panels[0].style.display = 'block';
-      panels[1].style.display = 'none';
+    switch (state.getServer()) {
+      case 0:
+        panels[0].style.display = 'block';
+        panels[1].style.display = 'none';
+        panels[2].style.display = 'none';
+        panels[3].style.display = 'none';
+        break;
+      case 1:
+        panels[0].style.display = 'none';
+        panels[1].style.display = 'block';
+        panels[2].style.display = 'none';
+        panels[3].style.display = 'none';
+        break;
+      case 2:
+        panels[0].style.display = 'none';
+        panels[1].style.display = 'none';
+        panels[2].style.display = 'block';
+        panels[3].style.display = 'none';
+        break;
+      case 3:
+        panels[0].style.display = 'none';
+        panels[1].style.display = 'none';
+        panels[2].style.display = 'none';
+        panels[3].style.display = 'block';
     }
   }
 }
-var safetyToggle = document.getElementById('safetyCheckbox')
-safetyToggle.onclick = function (e){
-  safetyEnabled = e.target.checked;
-  state.set(safetyEnabled);
+document.getElementById('lightingCheckbox').onclick = function (e){
+  state.setLighting(e.target.checked);
+  displayOnePanel()
+};
+
+document.getElementById('sidewalksCheckbox').onclick = function (e){
+  state.setSidewalks(e.target.checked);
   displayOnePanel()
 };
 displayOnePanel()
@@ -259,35 +367,84 @@ map.on('click', function (e){
   addWaypoint(e.latlng);
 });
 function addWaypoint(waypoint) {
-  if (safetyEnabled) {
-    var length = lrmControlCustom.getWaypoints().filter(function(pnt) {
-      return pnt.latLng;
-    });
-    length = length.length;
-    if (!length) {
-      lrmControlCustom.spliceWaypoints(0, 1, waypoint);
-    } else {
-      if (length === 1) length = length + 1;
-      lrmControlCustom.spliceWaypoints(length - 1, 1, waypoint);
-    }
-  }
-  else {
-    var length = lrmControl.getWaypoints().filter(function(pnt) {
-      return pnt.latLng;
-    });
-    length = length.length;
-    if (!length) {
-      lrmControl.spliceWaypoints(0, 1, waypoint);
-    } else {
-      if (length === 1) length = length + 1;
-      lrmControl.spliceWaypoints(length - 1, 1, waypoint);
-    }
+  switch (state.getServer()) {
+    case 0:
+      var length = lrmControl.getWaypoints().filter(function(pnt) {
+        return pnt.latLng;
+      });
+      length = length.length;
+      if (!length) {
+        lrmControl.spliceWaypoints(0, 1, waypoint);
+      } else {
+        if (length === 1) length = length + 1;
+        lrmControl.spliceWaypoints(length - 1, 1, waypoint);
+      }
+      break;
+    case 1:
+      var length = lrmControlLighting.getWaypoints().filter(function(pnt) {
+        return pnt.latLng;
+      });
+      length = length.length;
+      if (!length) {
+        lrmControlLighting.spliceWaypoints(0, 1, waypoint);
+      } else {
+        if (length === 1) length = length + 1;
+        lrmControlLighting.spliceWaypoints(length - 1, 1, waypoint);
+      }
+      break;
+    case 2:
+      var length = lrmControlSidewalks.getWaypoints().filter(function(pnt) {
+        return pnt.latLng;
+      });
+      length = length.length;
+      if (!length) {
+        lrmControlSidewalks.spliceWaypoints(0, 1, waypoint);
+      } else {
+        if (length === 1) length = length + 1;
+        lrmControlSidewalks.spliceWaypoints(length - 1, 1, waypoint);
+      }
+      break;
+    case 3:
+      var length = lrmControlCustom.getWaypoints().filter(function(pnt) {
+        return pnt.latLng;
+      });
+      length = length.length;
+      if (!length) {
+        lrmControlCustom.spliceWaypoints(0, 1, waypoint);
+      } else {
+        if (length === 1) length = length + 1;
+        lrmControlCustom.spliceWaypoints(length - 1, 1, waypoint);
+      }
   }
 }
 
 // User selected routes
 lrmControl.on('alternateChosen', function(e) {
-  if (safetyEnabled) return;
+  if (state.getServer() !== 0) return;
+  var directions = document.querySelectorAll('.leaflet-routing-alt');
+  if (directions[0].style.display != 'none') {
+    directions[0].style.display = 'none';
+    directions[1].style.display = 'block';
+  } else {
+    directions[0].style.display = 'block';
+    directions[1].style.display = 'none';
+  }
+});
+
+lrmControlLighting.on('alternateChosen', function(e) {
+  if (state.getServer() !== 1) return;
+  var directions = document.querySelectorAll('.leaflet-routing-alt');
+  if (directions[0].style.display != 'none') {
+    directions[0].style.display = 'none';
+    directions[1].style.display = 'block';
+  } else {
+    directions[0].style.display = 'block';
+    directions[1].style.display = 'none';
+  }
+});
+
+lrmControlSidewalks.on('alternateChosen', function(e) {
+  if (state.getServer() !== 2) return;
   var directions = document.querySelectorAll('.leaflet-routing-alt');
   if (directions[0].style.display != 'none') {
     directions[0].style.display = 'none';
@@ -299,7 +456,7 @@ lrmControl.on('alternateChosen', function(e) {
 });
 
 lrmControlCustom.on('alternateChosen', function(e) {
-  if (!safetyEnabled) return;
+  if (state.getServer() !== 3) return;
   var directions = document.querySelectorAll('.leaflet-routing-alt');
   if (directions[0].style.display != 'none') {
     directions[0].style.display = 'none';
@@ -312,6 +469,61 @@ lrmControlCustom.on('alternateChosen', function(e) {
 
 // Route export
 lrmControl.on('routeselected', function(e) { //here
+  if (state.getServer() !== 0) return;
+  var route = e.route || {};
+  var routeGeoJSON = {
+    type: 'Feature',
+    properties: {
+      name: route.name,
+      copyright: {
+        author: 'OpenStreetMap contributors',
+        license: 'http://www.openstreetmap.org/copyright'
+      },
+      link: {
+        href: window.document.location.href,
+        text: window.document.title
+      },
+      time: (new Date()).toISOString()
+    },
+    geometry: {
+      type: 'LineString',
+      coordinates: (route.coordinates || []).map(function (coordinate) {
+        return [coordinate.lng, coordinate.lat];
+      })
+    }
+  };
+  toolsControl.setRouteGeoJSON(routeGeoJSON);
+});
+
+lrmControlLighting.on('routeselected', function(e) { //here
+  if (state.getServer() !== 1) return;
+  var route = e.route || {};
+  var routeGeoJSON = {
+    type: 'Feature',
+    properties: {
+      name: route.name,
+      copyright: {
+        author: 'OpenStreetMap contributors',
+        license: 'http://www.openstreetmap.org/copyright'
+      },
+      link: {
+        href: window.document.location.href,
+        text: window.document.title
+      },
+      time: (new Date()).toISOString()
+    },
+    geometry: {
+      type: 'LineString',
+      coordinates: (route.coordinates || []).map(function (coordinate) {
+        return [coordinate.lng, coordinate.lat];
+      })
+    }
+  };
+  toolsControl.setRouteGeoJSON(routeGeoJSON);
+});
+
+lrmControlSidewalks.on('routeselected', function(e) { //here
+  if (state.getServer() !== 2) return;
   var route = e.route || {};
   var routeGeoJSON = {
     type: 'Feature',
@@ -338,7 +550,7 @@ lrmControl.on('routeselected', function(e) { //here
 });
 
 lrmControlCustom.on('routeselected', function(e) { //here
-  if (!safetyEnabled) return;
+  if (state.getServer() !== 3) return;
   var route = e.route || {};
   var routeGeoJSON = {
     type: 'Feature',
