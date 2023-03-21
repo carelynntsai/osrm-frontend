@@ -297,14 +297,14 @@ checkbox.addTo(map);
 // }
 // document.getElementById ("safety_factors").addEventListener ("click", handleCommand, false);
 
-var routeInfo = L.control();
-routeInfo.onAdd = function(map) {
-  var div = L.DomUtil.create('div', 'route-information');
+// var routeInfo = L.control();
+// routeInfo.onAdd = function(map) {
+//   var div = L.DomUtil.create('div', 'route-information');
 
-  div.innerHTML = '<h3>Route Information</h3>'
+//   div.innerHTML = '<h3>Route Information</h3>'
 
-  return div;
-};
+//   return div;
+// };
 
 routeInfo.addTo(map);
 

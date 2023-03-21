@@ -980,16 +980,12 @@ input[type=button], input[type=submit], input[type=reset] {
   border-radius: 5px;
 }
 .route-information{
-  z-index: 100000;
-  position: fixed;
-  left: 0px;
-  top: 260px;
   padding: 5px;
   padding-left: 10px;
-  width: 50%;
+  width: 100%;
   max-width: 350px;
   color: #031732;
-  display: none;
+
 }
 
 
