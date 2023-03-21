@@ -68,17 +68,17 @@ var ReversablePlan = L.Routing.Plan.extend({
   }
 });
 
-// function createCheckboxes() {
-//   command.addTo(map);
+function createCheckboxes() {
+  command.addTo(map);
 
-//   // add the event handler
-//   function handleCommand() {
-//     alert("Clicked, checked = " + this.checked);
-//   }
-//   document.getElementById ("safety_factors").addEventListener ("click", handleCommand, false);
+  // add the event handler
+  function handleCommand() {
+    alert("Clicked, checked = " + this.checked);
+  }
+  document.getElementById ("safety_factors").addEventListener ("click", handleCommand, false);
 
 
-// };
+};
 
 /* Setup markers */
 function makeIcon(i, n) {
@@ -150,9 +150,8 @@ var controlOptions = {
   routeWhileDragging: options.lrm.routeWhileDragging,
   lineOptions: options.lrm.lineOptions,
   altLineOptions: options.lrm.altLineOptions,
-  summaryTemplate: options.lrm.summaryTemplate,
   safetyDetails: options.lrm.safetyDetails,
-  checkboxes: options.lrm.checkboxes,
+  summaryTemplate: options.lrm.summaryTemplate,
   containerClassName: options.lrm.containerClassName,
   alternativeClassName: options.lrm.alternativeClassName,
   stepClassName: options.lrm.stepClassName,
@@ -309,13 +308,17 @@ routeInfo.onAdd = function(map) {
 
 routeInfo.addTo(map);
 
-var safetyDetails = L.control();
-safetyDetails.onAdd = function(map) {
-  var div = L.DomUtil.create('div', 'safety-details');
+// var safetyDetails = L.control();
+// safetyDetails.onAdd = function(map) {
+//   var div = L.DomUtil.create('div', 'safety-details');
 
-  div.innerHTML = '<H4>Safety Details</H4>\
-  <p>Lighting: Good <br> Sidewalks: 90% <br> Average nearby road speeds: 50km/h </p>'
+//   // div.innerHTML = '<H4>Safety Details</H4>\
+//   // <p>Lighting: Good <br> Sidewalks: 90% <br> Average nearby road speeds: 50km/h </p>'
 
-  return div;
-};
+//   div.onscroll
+
+//   return div;
+
+// };
+
 safetyDetails.addTo(map);
