@@ -285,7 +285,7 @@ checkbox.onAdd = function(map) {
    <fieldset style="border: 0;"> <input type="checkbox" name="safety_factors" value="Lighting">Lighting<br> \
    <input type="checkbox" name="safety_factors" value="Sidewalks">Sidewalks<br> \
    <input type="checkbox" name="safety_factors" value="Road Speed">Road speed<br> \
-  <br> <input type="submit" name="save-safety-factors" value="Save" style="color=blue"; /> </fieldset>'
+   <input type="submit" name="save-safety-factors" value="Save" style="color=blue"; /> </fieldset>'
 
   return div;
 };

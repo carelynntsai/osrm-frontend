@@ -30,7 +30,7 @@ module.exports = {
     ],
     routeWhileDragging: true,
     summaryTemplate: '<div class="route-information"> \
-        <div class="osrm-directions-summary"> <h3>Distance: {distance}, <br> Time: {time}</h3> </div>\
+        <div class="osrm-directions-summary"> <h2 style="margin-bottom:0px;"> Route Information </h2><h3>Distance: {distance}, <br> Time: {time}</h3> </div>\
            <div class="safety-details">  <H4>Safety Details</H4>\
            <p>Lighting: Good <br> Sidewalks: 90% <br> Average nearby road speeds: 50km/h </p>\
         </div> \
