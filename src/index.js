@@ -130,7 +130,7 @@ var plan = new ReversablePlan([], {
   useZoomParameter: options.lrm.useZoomParameter,
   reverseWaypoints: true,
   dragStyles: options.lrm.dragStyles,
-  geocodersClassName: options.lrm.geocodersClassName, // here
+  geocodersClassName: options.lrm.geocodersClassName,
   geocoderPlaceholder: function(i, n) {
     var startend = [local['Start - press enter to drop marker'], local['End - press enter to drop marker']];
     var via = [local['Via point - press enter to drop marker']];
@@ -195,9 +195,8 @@ var lrmControl = L.Routing.control(Object.assign(controlOptions, {
   router: router
 })).addTo(map);
 
-// does the stuff above only happen once?
 var toolsControl = tools.control(localization.get(mergedOptions.language), localization.getLanguages(), options.tools).addTo(map);
-var state = state(map, lrmControl,toolsControl, mergedOptions);
+var state = state(map, lrmControl, toolsControl, mergedOptions);
 
 // User selected safetyPreferences
 document.getElementById('lightingCheckbox').onclick = function (e) {
@@ -223,13 +222,9 @@ plan.on('waypointgeocoded', function(e) {
   }
 });
 
-// add onClick event
-map.on('click', function (e) {
-  // console.log(e.clientX)
-  // if (e.clientX >360) {
-  addWaypoint(e.latlng);
-  // }
 
+map.on('click', function (e) {
+  addWaypoint(e.latlng);
 });
 function addWaypoint(waypoint) {
   var length = lrmControl.getWaypoints().filter(function(pnt) {
@@ -257,7 +252,7 @@ lrmControl.on('alternateChosen', function(e) {
 });
 
 // Route export
-lrmControl.on('routeselected', function(e) { //here
+lrmControl.on('routeselected', function(e) {
   var route = e.route || {};
   var routeGeoJSON = {
     type: 'Feature',
@@ -283,7 +278,7 @@ lrmControl.on('routeselected', function(e) { //here
   toolsControl.setRouteGeoJSON(routeGeoJSON);
 });
 
-plan.on('waypointschanged', function(e) { //here
+plan.on('waypointschanged', function(e) {
   if (!e.waypoints ||
       e.waypoints.filter(function(wp) {
         return !wp.latLng;
