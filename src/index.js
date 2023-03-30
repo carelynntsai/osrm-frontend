@@ -364,18 +364,16 @@ function displayOnePanel() {
 document.getElementById('lightingCheckbox').onclick = function (e) {
   state.setLighting(e.target.checked);
   server = state.getServer();
-  e.stopPropagation();
   displayOnePanel();
 };
 
 document.getElementById('sidewalksCheckbox').onclick = function (e) {
   state.setSidewalks(e.target.checked);
   server = state.getServer();
-  e.stopPropagation();
   displayOnePanel();
 };
 
-document.getElementById('speedCheckbox').onclick = function (e) {
+document.getElementsByClassName('checkbox-container')[0].onclick = function (e) {
   e.stopPropagation();
 };
 
