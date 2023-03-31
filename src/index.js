@@ -160,7 +160,7 @@ var controlOptions = {
   language: 'en', // we are injecting own translations via osrm-text-instructions
   showAlternatives: options.lrm.showAlternatives,
   units: mergedOptions.units,
-  serviceUrl: leafletOptions.services[0].path,
+  serviceUrl: leafletOptions.services[0].paths[0],
   useZoomParameter: options.lrm.useZoomParameter,
   routeDragInterval: options.lrm.routeDragInterval,
   collapsible: options.lrm.collapsible
@@ -168,8 +168,6 @@ var controlOptions = {
 
 
 var router = (new L.Routing.OSRMv1(controlOptions));
-
-
 
 router._convertRouteOriginal = router._convertRoute;
 router._convertRoute = function(responseRoute) {
@@ -201,12 +199,18 @@ var state = state(map, lrmControl, toolsControl, mergedOptions);
 // User selected safetyPreferences
 document.getElementById('lightingCheckbox').onclick = function (e) {
   state.setLighting(e.target.checked);
-  server = state.getServer();
+  var server = state.getServer();
+  
+  L.Util.setOptions(router, {serviceUrl: leafletOptions.services[0].paths[server]});
+  state.set();
 };
 
 document.getElementById('sidewalksCheckbox').onclick = function (e) {
   state.setSidewalks(e.target.checked);
-  server = state.getServer();
+  var server = state.getServer();
+
+  L.Util.setOptions(router, {serviceUrl: leafletOptions.services[0].paths[server]});
+  state.set();
 };
 
 document.getElementsByClassName('checkbox-container')[0].onclick = function (e) {

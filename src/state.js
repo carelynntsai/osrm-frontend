@@ -14,7 +14,7 @@ var State = L.Class.extend({
       lighting : false,
       sidewalks : false
     };
-    this.server = 0
+    this.server = 0;
 
     this.set(default_options);
 
@@ -45,9 +45,9 @@ var State = L.Class.extend({
 
   setServer: function() {
     if (!this.safety.lighting && !this.safety.sidewalks) this.server = 0;
-    else if (this.safety.lighting && this.safety.sidewalks) this.server = 3;
     else if (this.safety.lighting && !this.safety.sidewalks) this.server = 1;
     else if (this.safety.sidewalks && !this.safety.lighting) this.server = 2;
+    else if (this.safety.lighting && this.safety.sidewalks) this.server = 3;
   },
 
   set: function(options) {
